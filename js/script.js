@@ -4,12 +4,10 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
-// Add your global variables that store the DOM elements
-const listofStudents = document.getElementsByClassName("student-list");
-const pageItems = "";
+//I add global variables that store the DOM elements
+const studentList = document.getElementsByClassName("student-item cf");
+const pageItems = 10;
 
-console.log(listofStudents);
-    const startIndex = ()
 /***
    Create the `showPage` function to hide all of the items in the
    list except for the ten you want to show.
@@ -25,11 +23,20 @@ console.log(listofStudents);
        "invoke" the function
 ***/
 
-const showPage = (list, page) => {};
+const showPage = (list, page) => {
+  let startIndex = page * pageItems - pageItems;
+  let endIndex = page * pageItems;
+
+  for (let i = 0; i < list.length; i += 1) {}
+};
 
 /***
    Create the `appendPageLinks function` to generate, append, and add
    functionality to the pagination buttons.
 ***/
 
+const appendPageLinks = () => {};
+
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
+
+//Thank you for taking a look at my code. I am going for the "Exceeds Expectations" grade. If its not on par with that grade, then please reject this project for resubmission.
