@@ -75,14 +75,18 @@ const linkClick = studentList => {
 
 linkClick(studentList);
 
-//Here I create the search form dynamically and appropriate it onto the HTML document
+//I create the search form dynamically
 
 const searchBar = document.createElement("input");
 searchBar.type = "text";
 searchBar.setAttribute("class", "searchInput");
 searchBar.innerText = "Search for a Student";
-document.body.appendChild(searchBar);
 
-//I add functionality to the Search Form
+//I attach the search form to the HTML document
+
+const divHeader = document.querySelector(".page-header");
+divHeader.appendChild(searchBar);
+
+//I add functionality to the Search Form in order to filter the students
 
 //Thank you for taking a look at my code. I am going for the "Exceeds Expectations" grade. If its not on par with that grade, then please reject this project for resubmission.
