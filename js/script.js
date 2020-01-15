@@ -67,7 +67,7 @@ const linkClick = studentList => {
         }
       }
       event.target.classList.add("active");
-      let pageNumber = event.target.textContent;
+      let pageNumber = event.target.innerText;
       showPage(studentList, pageNumber);
     });
   }
@@ -75,12 +75,14 @@ const linkClick = studentList => {
 
 linkClick(studentList);
 
-//Dynamic search form, to search for a specific student
+//Here I create the search form dynamically and appropriate it onto the HTML document
 
 const searchBar = document.createElement("input");
 searchBar.type = "text";
 searchBar.setAttribute("class", "searchInput");
 searchBar.innerText = "Search for a Student";
 document.body.appendChild(searchBar);
+
+//I add functionality to the Search Form
 
 //Thank you for taking a look at my code. I am going for the "Exceeds Expectations" grade. If its not on par with that grade, then please reject this project for resubmission.
