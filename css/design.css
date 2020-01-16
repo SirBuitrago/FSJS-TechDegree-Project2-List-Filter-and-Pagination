@@ -120,4 +120,7 @@ body {
 
 .searchInput {
   float: right;
+  margin-top: 1px;
+  border-radius: 5px;
+  box-sizing: content-box;
 }

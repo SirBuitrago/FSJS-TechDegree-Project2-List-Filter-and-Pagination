@@ -80,13 +80,26 @@ linkClick(studentList);
 const searchBar = document.createElement("input");
 searchBar.type = "text";
 searchBar.setAttribute("class", "searchInput");
-searchBar.innerText = "Search for a Student";
+searchBar.placeholder = "Search Students...";
 
 //I attach the search form to the HTML document
 
 const divHeader = document.querySelector(".page-header");
 divHeader.appendChild(searchBar);
 
-//I add functionality to the Search Form in order to filter the students
+//I add functionality to the Search Form in order to filter the students by letters and keywords
+
+searchBar.addEventListener("keyup", function(e) {
+  const term = e.target.value.toLowerCase();
+  const searchStudents = studentList;
+  Array.from(searchStudents).forEach(function(studentList) {
+    const title = studentList.firstElementChild.textContent;
+    if (title.toLowerCase().indexOf(term) != -1) {
+      studentList.style.display = "block";
+    } else {
+      studentList.style.display = "none";
+    }
+  });
+});
 
 //Thank you for taking a look at my code. I am going for the "Exceeds Expectations" grade. If its not on par with that grade, then please reject this project for resubmission.
