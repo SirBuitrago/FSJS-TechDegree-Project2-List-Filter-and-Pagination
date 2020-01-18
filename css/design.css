@@ -27,21 +27,21 @@ body {
   float: right;
 }
 
-.page-header .student-search input {
+/* .page-header .student-search input {
   border-radius: 5px;
   border: 1px solid #eaeaea;
   padding: 8px 15px;
   font-size: 14px;
 }
 
-.page-header .student-search button {
+ .page-header .student-search button {
   border-radius: 5px;
   border: 1px solid #eaeaea;
   padding: 8px 15px;
   font-size: 14px;
   background-color: #4ba6c3;
   color: #fff;
-}
+}  */
 
 .student-list {
 }
@@ -120,7 +120,18 @@ body {
 
 .searchInput {
   float: right;
-  margin-top: 1px;
   border-radius: 5px;
-  box-sizing: content-box;
+  border: 1px solid #eaeaea;
+  padding: 8px 15px;
+  font-size: 12px;
+}
+
+.searchBtn {
+  float: right;
+  border-radius: 5px;
+  border: 1px solid #eaeaea;
+  padding: 8px 15px;
+  font-size: 12px;
+  background-color: #4ba6c3;
+  color: #fff;
 }
