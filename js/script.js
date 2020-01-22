@@ -31,10 +31,7 @@ divHeader.appendChild(searchBar);
 
 //I build a function for the Search Form, in order to filter the students by letters or keywords
 const searchResults = [];
-const noResultDiv = document.querySelector("page-header cf");
-const pageList = document.querySelector("ul");
-const eachStudent = pageList.children;
-const studentNames = document.querySelectorAll(".student-details > h3");
+const names = document.querySelectorAll(".student-details > h3");
 
 const search = () => {
   const term = event.target.value.toLowerCase();
