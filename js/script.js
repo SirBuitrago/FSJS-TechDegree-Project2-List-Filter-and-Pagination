@@ -29,6 +29,30 @@ const divHeader = document.querySelector(".page-header");
 divHeader.appendChild(searchButton);
 divHeader.appendChild(searchBar);
 
+//I build a function for the Search Form, in order to filter the students by letters or keywords
+const searchResults = [];
+const noResultDiv = document.querySelector("page-header cf");
+const pageList = document.querySelector("ul");
+const eachStudent = pageList.children;
+const studentNames = document.querySelectorAll(".student-details > h3");
+
+const search = () => {
+  const term = event.target.value.toLowerCase();
+  searchResults.length = 0;
+  Array.from(studentList).forEach(function(studentList) {
+    const name = studentList.firstElementChild.textContent;
+    for (let i = 0; i <= name.length; i++) {
+      if (name.toLowerCase().indexOf(term) != -1) {
+        studentList.style.display = "block";
+        searchResults.push(i);
+      } else {
+        studentList.style.display = "none";
+        searchResults.push(i);
+      }
+    }
+  });
+};
+
 //This function is simply to hide or display a set of 10 students that are suppose to show for each page link. The functions loops through the Student List.
 const showPage = (studentList, page) => {
   let startIndex = page * pageItems - pageItems;
@@ -48,15 +72,17 @@ showPage(studentList, 1);
 
 //The appendPageLinks function is to generate, append, and add functionality to the pagination buttons-by creating the necessary divs, ul and li elements to store the links
 
+const pageDiv = document.querySelector(".page");
+
 const appendPageLinks = studentList => {
-  const page = Math.ceil(studentList.length / pageItems);
-  const div = document.createElement("div");
-  div.className = "pagination";
-  document.body.appendChild(div);
+  const pageLength = Math.ceil(studentList.length / pageItems);
+  const paginationDiv = document.createElement("div");
+  paginationDiv.className = "pagination";
+  pageDiv.appendChild(paginationDiv);
   const ul = document.createElement("ul");
-  div.appendChild(ul);
-  for (let i = 0; i <= page; i++) {
-    if (i != page) {
+  paginationDiv.appendChild(ul);
+  for (let i = 0; i < pageLength; i++) {
+    if (i != pageLength) {
       let li = document.createElement("li");
       ul.appendChild(li);
       const a = document.createElement("a");
@@ -68,51 +94,27 @@ const appendPageLinks = studentList => {
       li.appendChild(a);
     }
   }
-  //Click event listener to loop through all the page links and bring up the associated number of students for that page number
+
+  //Click event listener to loop through all the page links and bring up the associated number of students for the active page number
 
   const clicked = document.querySelectorAll("a");
 
   for (let i = 0; i < clicked.length; i++) {
-    clicked[i].addEventListener("click", evt => {
-      if (event.target.className === "A") {
-        if (event.target.className === "active") {
-          event.target.classList.remove("active");
-        }
-      } else {
-        let pageNumber = clicked[i].innerHTML;
-        event.target.classList.add("active");
-        showPage(studentList, pageNumber);
-      }
+    clicked[i].addEventListener("click", event => {
+      const prevPage = document.querySelector(".active");
+      prevPage.className = "";
+
+      const newPage = event.target;
+      newPage.className = "active";
+
+      const pageNumber = newPage.textContent;
+      showPage(studentList, pageNumber);
     });
   }
 };
 
 //Call on the appendPageLinks function with the studentList variable as the parameter
 appendPageLinks(studentList);
-
-//I build a function for the Search Form, in order to filter the students by letters or keywords
-const studentArray = [];
-
-const search = () => {
-  const term = event.target.value.toLowerCase();
-  Array.from(studentList).forEach(function(studentList) {
-    const name = studentList.firstElementChild.textContent;
-    for (let i = 0; i <= name.length; i++) {
-      if (name.toLowerCase().indexOf(term) != -1) {
-        studentList.style.display = "block";
-      } else {
-        studentList.style.display = "none";
-      }
-      // if () {
-      //   let error = document.createElement("div");
-      //   error.id = "error";
-      //   error.innerHTML =
-      //     "Sorry, there are no students with the name  " + term + ".";
-      //   divHeader.appendChild(error);
-      // }
-    }
-  });
-};
 
 //I invoke my search function with the keyup event listner
 searchBar.addEventListener("keyup", () => {
@@ -121,9 +123,8 @@ searchBar.addEventListener("keyup", () => {
 
 //Added an event listener to my search button
 searchButton.addEventListener("click", () => {
+  //search();
   console.log("This button is functional");
 });
-
-//Alert message if there are no search results in the search form
 
 //Thank you for taking a look at my code. I am going for the "Exceeds Expectations" grade. If its not on par with that grade, then please reject this project for resubmission.
