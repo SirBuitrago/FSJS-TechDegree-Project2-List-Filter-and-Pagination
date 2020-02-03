@@ -27,7 +27,7 @@ body {
   float: right;
 }
 
-.page-header .student-search input {
+/* .page-header .student-search input {
   border-radius: 5px;
   border: 1px solid #eaeaea;
   padding: 8px 15px;
@@ -41,7 +41,7 @@ body {
   font-size: 14px;
   background-color: #4ba6c3;
   color: #fff;
-}
+} */
 
 .student-list {
 }

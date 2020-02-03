@@ -13,11 +13,13 @@ const pageItems = 10;
 
 //I create a search form and button dynamically
 
+//Search form
 const searchBar = document.createElement("input");
 searchBar.type = "text";
 searchBar.setAttribute("class", "searchInput");
-searchBar.placeholder = "Search Students...";
+const searchPlaceHolder = (searchBar.placeholder = "Search Students...");
 
+//Search button
 const searchButton = document.createElement("button");
 searchButton.type = "button";
 searchButton.setAttribute("class", "searchBtn");
@@ -28,27 +30,6 @@ searchButton.innerHTML = "Search";
 const divHeader = document.querySelector(".page-header");
 divHeader.appendChild(searchButton);
 divHeader.appendChild(searchBar);
-
-//I build a function for the Search Form, in order to filter the students by letters or keywords
-const searchResults = [];
-const names = document.querySelectorAll(".student-details > h3");
-
-const search = () => {
-  const term = event.target.value.toLowerCase();
-  searchResults.length = 0;
-  Array.from(studentList).forEach(function(studentList) {
-    const name = studentList.firstElementChild.textContent;
-    for (let i = 0; i <= name.length; i++) {
-      if (name.toLowerCase().indexOf(term) != -1) {
-        studentList.style.display = "block";
-        searchResults.push(i);
-      } else {
-        studentList.style.display = "none";
-        searchResults.push(i);
-      }
-    }
-  });
-};
 
 //This function is simply to hide or display a set of 10 students that are suppose to show for each page link. The functions loops through the Student List.
 const showPage = (studentList, page) => {
@@ -67,7 +48,7 @@ const showPage = (studentList, page) => {
 //Call on the ShowPage Function with the necessary parameters
 showPage(studentList, 1);
 
-//The appendPageLinks function is to generate, append, and add functionality to the pagination buttons-by creating the necessary divs, ul and li elements to store the links
+//The appendPageLinks function is to generate, append, and add functionality to the pagination buttons-by creating the necessary divs, ul and li elements to store the links, for the student list
 
 const pageDiv = document.querySelector(".page");
 
@@ -113,14 +94,40 @@ const appendPageLinks = studentList => {
 //Call on the appendPageLinks function with the studentList variable as the parameter
 appendPageLinks(studentList);
 
+//I build a function for the Search Form, in order to filter the students by letters or keywords
+
+let noResults = document.querySelector(".noResults");
+const searchResults = [];
+const studentNames = document.querySelectorAll(".student-details > h3");
+const searchValue = document.querySelector("input").value.toLowerCase();
+const studentListParent = document.querySelector(".student-list");
+const page = document.querySelector(".page");
+
+const search = searchValue => {
+  const term = event.target.value.toLowerCase();
+  Array.from(studentList).forEach(function(studentNames) {
+    const name = studentNames.firstElementChild.textContent;
+    if (!term) {
+      showPage(studentList, 1);
+    } else {
+      for (let i = 0; i < name.length; i++) {
+        studentNames.style.display = "none";
+        if (name.toLowerCase().indexOf(term) != -1) {
+          studentNames.style.display = "block";
+        }
+      }
+    }
+  });
+};
+
 //I invoke my search function with the keyup event listner
-searchBar.addEventListener("keyup", () => {
-  search();
+searchBar.addEventListener("keyup", e => {
+  search(searchValue);
 });
 
-//Added an event listener to my search button
-searchButton.addEventListener("click", () => {
-  //search();
+//Added a click event listener to my search button
+searchButton.addEventListener("click", e => {
+  search(searchValue);
   console.log("This button is functional");
 });
 
