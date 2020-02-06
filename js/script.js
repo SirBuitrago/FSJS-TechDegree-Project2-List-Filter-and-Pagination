@@ -32,15 +32,15 @@ divHeader.appendChild(searchButton);
 divHeader.appendChild(searchBar);
 
 //This function is simply to hide or display a set of 10 students that are suppose to show for each page link. The functions loops through the Student List.
-const showPage = (studentList, page) => {
+const showPage = (list, page) => {
   let startIndex = page * pageItems - pageItems;
   let endIndex = page * pageItems;
 
   for (let i = 0; i < studentList.length; i++) {
     if (i >= startIndex && i < endIndex) {
-      studentList[i].style.display = "block";
+      list[i].style.display = "block";
     } else {
-      studentList[i].style.display = "none";
+      list[i].style.display = "none";
     }
   }
 };
@@ -52,8 +52,8 @@ showPage(studentList, 1);
 
 const pageDiv = document.querySelector(".page");
 
-const appendPageLinks = studentList => {
-  const pageLength = Math.ceil(studentList.length / pageItems);
+const appendPageLinks = list => {
+  const pageLength = Math.ceil(list.length / pageItems);
   const paginationDiv = document.createElement("div");
   paginationDiv.className = "pagination";
   pageDiv.appendChild(paginationDiv);
@@ -94,30 +94,45 @@ const appendPageLinks = studentList => {
 //Call on the appendPageLinks function with the studentList variable as the parameter
 appendPageLinks(studentList);
 
-//I build a function for the Search Form, in order to filter the students by letters or keywords
+//I build a function for the Search Form, in order to filter the students by letters or keywords. The function is also meant to paginate any search results.
 
-let noResults = document.querySelector(".noResults");
-const searchResults = [];
+const page = document.querySelector(".page");
+const studentListParent = document.querySelector(".student-list");
 const studentNames = document.querySelectorAll(".student-details > h3");
 const searchValue = document.querySelector("input").value.toLowerCase();
-const studentListParent = document.querySelector(".student-list");
-const page = document.querySelector(".page");
 
 const search = searchValue => {
+  const searchResults = [];
   const term = event.target.value.toLowerCase();
-  Array.from(studentList).forEach(function(studentNames) {
-    const name = studentNames.firstElementChild.textContent;
-    if (!term) {
-      showPage(studentList, 1);
-    } else {
-      for (let i = 0; i < name.length; i++) {
-        studentNames.style.display = "none";
-        if (name.toLowerCase().indexOf(term) != -1) {
-          studentNames.style.display = "block";
-        }
-      }
+  let noResults = document.querySelector(".noResults");
+
+  if (!term) {
+    showPage(studentList, 1);
+  } else {
+    if (noResults) {
+      noResults.parentNode.removeChild(noResults);
     }
-  });
+    studentNames.forEach((name, i) => {
+      name = name.textContent.toLowerCase();
+      if (name.indexOf(term) > -1) {
+        studentList[i].style.display = "block";
+        searchResults.push(studentList[i]);
+      } else {
+        studentList[i].style.display = "none";
+      }
+    });
+
+    //If the search form returns no results, a message is printed on that screen.
+
+    if (searchResults.length === 0) {
+      noResults = document.createElement("h2");
+      noResults.textContent = "No students found, please try again...";
+      noResults.className = "noResults";
+      page.insertBefore(noResults, studentListParent);
+    } else {
+      appendPageLinks(searchResults);
+    }
+  }
 };
 
 //I invoke my search function with the keyup event listner
