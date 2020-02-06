@@ -140,6 +140,7 @@ const search = searchValue => {
       page.insertBefore(noResults, studentListParent);
     } else {
       appendPageLinks(searchResults);
+      showPage(searchResults, 1);
     }
   }
 };
