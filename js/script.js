@@ -53,12 +53,18 @@ showPage(studentList, 1);
 const pageDiv = document.querySelector(".page");
 
 const appendPageLinks = list => {
+  if (document.querySelector(".pagination") !== null) {
+    let removeDiv = document.querySelector(".pagination");
+    pageDiv.removeChild(removeDiv);
+  }
+
   const pageLength = Math.ceil(list.length / pageItems);
   const paginationDiv = document.createElement("div");
+  const ul = document.createElement("ul");
   paginationDiv.className = "pagination";
   pageDiv.appendChild(paginationDiv);
-  const ul = document.createElement("ul");
   paginationDiv.appendChild(ul);
+
   for (let i = 0; i < pageLength; i++) {
     if (i != pageLength) {
       let li = document.createElement("li");
@@ -94,12 +100,14 @@ const appendPageLinks = list => {
 //Call on the appendPageLinks function with the studentList variable as the parameter
 appendPageLinks(studentList);
 
-//I build a function for the Search Form, in order to filter the students by letters or keywords. The function is also meant to paginate any search results.
+//I declare search form variables and constants.
 
 const page = document.querySelector(".page");
 const studentListParent = document.querySelector(".student-list");
 const studentNames = document.querySelectorAll(".student-details > h3");
 const searchValue = document.querySelector("input").value.toLowerCase();
+
+//I build a function for the Search Form, in order to filter the students by letters or keywords. The function is also meant to paginate any search results.
 
 const search = searchValue => {
   const searchResults = [];
@@ -108,6 +116,7 @@ const search = searchValue => {
 
   if (!term) {
     showPage(studentList, 1);
+    appendPageLinks(studentList);
   } else {
     if (noResults) {
       noResults.parentNode.removeChild(noResults);
