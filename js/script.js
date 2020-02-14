@@ -11,6 +11,13 @@ const studentList = document.getElementsByClassName("student-item");
 //This is variable stores how many students I want to show on each page
 const pageItems = 10;
 
+//I declare search form variables and constants.
+
+const page = document.querySelector(".page");
+const list = document.querySelectorAll("li");
+const studentListParent = document.querySelector(".student-list");
+const studentNames = document.querySelectorAll(".student-details > h3");
+
 //I create a search form and button dynamically
 
 //Search form
@@ -32,15 +39,15 @@ divHeader.appendChild(searchButton);
 divHeader.appendChild(searchBar);
 
 //This function is simply to hide or display a set of 10 students that are suppose to show for each page link. The functions loops through the Student List.
-const showPage = (list, page) => {
+const showPage = (studentList, page) => {
   let startIndex = page * pageItems - pageItems;
   let endIndex = page * pageItems;
 
   for (let i = 0; i < studentList.length; i++) {
     if (i >= startIndex && i < endIndex) {
-      list[i].style.display = "block";
+      studentList[i].style.display = "block";
     } else {
-      list[i].style.display = "none";
+      studentList[i].style.display = "none";
     }
   }
 };
@@ -92,7 +99,7 @@ const appendPageLinks = list => {
       newPage.className = "active";
 
       const pageNumber = newPage.textContent;
-      showPage(studentList, pageNumber);
+      showPage(list, pageNumber);
     });
   }
 };
@@ -100,14 +107,9 @@ const appendPageLinks = list => {
 //Call on the appendPageLinks function with the studentList variable as the parameter
 appendPageLinks(studentList);
 
-//I declare search form variables and constants.
-
-const page = document.querySelector(".page");
-const studentListParent = document.querySelector(".student-list");
-const studentNames = document.querySelectorAll(".student-details > h3");
-const searchValue = document.querySelector("input").value.toLowerCase();
-
 //I build a function for the Search Form, in order to filter the students by letters or keywords. The function is also meant to paginate any search results.
+
+const searchValue = document.querySelector("input").value.toLowerCase();
 
 const search = searchValue => {
   const searchResults = [];
@@ -124,16 +126,16 @@ const search = searchValue => {
     studentNames.forEach((name, i) => {
       name = name.textContent.toLowerCase();
       if (name.indexOf(term) > -1) {
-        studentList[i].style.display = "block";
         searchResults.push(studentList[i]);
+        studentList[i].style.display = "block";
       } else {
         studentList[i].style.display = "none";
       }
     });
 
-    //If the search form returns no results, a message is printed on that screen.
+    //If the search form returns no results, a message is printed on that screen. Else the function appends and shows the search results
 
-    if (searchResults.length === 0) {
+    if (searchResults.length == 0 || searchResults === undefined) {
       noResults = document.createElement("h2");
       noResults.textContent = "No students found, please try again...";
       noResults.className = "noResults";
@@ -142,6 +144,7 @@ const search = searchValue => {
       appendPageLinks(searchResults);
       showPage(searchResults, 1);
     }
+    console.log(searchResults.length);
   }
 };
 
