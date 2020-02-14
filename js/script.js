@@ -40,7 +40,7 @@ divHeader.appendChild(searchBar);
 
 //This function is simply to hide or display a set of 10 students that are suppose to show for each page link. The functions loops through the Student List.
 const showPage = (studentList, page) => {
-  let startIndex = page * pageItems - pageItems;
+  const startIndex = page * pageItems - pageItems;
   let endIndex = page * pageItems;
 
   for (let i = 0; i < studentList.length; i++) {
@@ -61,7 +61,7 @@ const pageDiv = document.querySelector(".page");
 
 const appendPageLinks = list => {
   if (document.querySelector(".pagination") !== null) {
-    let removeDiv = document.querySelector(".pagination");
+    const removeDiv = document.querySelector(".pagination");
     pageDiv.removeChild(removeDiv);
   }
 
@@ -74,7 +74,7 @@ const appendPageLinks = list => {
 
   for (let i = 0; i < pageLength; i++) {
     if (i != pageLength) {
-      let li = document.createElement("li");
+      const li = document.createElement("li");
       ul.appendChild(li);
       const a = document.createElement("a");
       a.href = "#";
@@ -140,6 +140,8 @@ const search = searchValue => {
       noResults.textContent = "No students found, please try again...";
       noResults.className = "noResults";
       page.insertBefore(noResults, studentListParent);
+      const removeDiv = document.querySelector(".pagination");
+      pageDiv.removeChild(removeDiv);
     } else {
       appendPageLinks(searchResults);
       showPage(searchResults, 1);
